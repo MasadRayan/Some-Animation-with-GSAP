@@ -6,25 +6,33 @@ import React, { useRef, useState } from 'react';
 const App = () => {
 
   const circleRef = useRef();
-  const [randomNum, setRandomNum] =useState()
-  const random = gsap.utils.random(-500, 400, 100);
+  const [randomNum, setRandomNum] = useState();
+  const [rotate, setRotate] = useState(0);
+  const [Yvalue, setYvalue] = useState(0);
+  const random = gsap.utils.random(-400, 400, 100);
+  const rotateRandom = gsap.utils.random(-360, 360, 30);
+  const randomY = gsap.utils.random(-300, 300, 30);
 
   useGSAP(() => {
     gsap.to(circleRef.current, {
       x: randomNum,
-      duration:1,
+      y:Yvalue,
+      duration: 1,
+      rotate: rotate
     })
-  },[randomNum])
+  }, [randomNum, rotate, Yvalue])
 
   return (
     <main className='h-[100vh] w-[100%] bg-black flex justify-center items-center flex-col gap-20'>
-      <button
+      <img
         onClick={() => {
-          setRandomNum(random)
+          setRandomNum(random);
+          setRotate(rotateRandom);
+          setYvalue(randomY)
         }}
-        className='w-[200px] h-[40px] rounded-3xl bg-gradient-to-r from-green-300 to-pink-500 text-2xl font-bold active:scale-95 '
-      >Animate</button>
-      <div ref={circleRef} className='h-[200px] w-[200px] rounded-full bg-gradient-to-b from-blue-400 to-white mb-5'></div>
+        ref={circleRef} src='https://images.vexels.com/media/users/3/242241/isolated/preview/409d95bf597e130c6c1b1d2ac3f5dbf5-side-fly-geometric-color-stroke.png'
+        className='h-[200px] w-[200px]'
+        ></img>
     </main>
   );
 };
